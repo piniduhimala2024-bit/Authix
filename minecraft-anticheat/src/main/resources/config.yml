@@ -1,0 +1,23 @@
+branding:
+  prefix: "&6[PinTaAC]&r"
+  madeBy: "Made By PinTa Tag"
+
+speed:
+  maxBlocksPerSecond: 9.0
+
+fly:
+  maxAirTicks: 40
+
+actions:
+  teleportBack: true
+  notify: true
+
+xray:
+  windowSeconds: 300
+  minOreCount: 8
+  hiddenRatio: 0.7
+  maxExposedFaces: 1
+
+totem:
+  swapThresholdMs: 150
+  inventoryGraceMs: 1500
