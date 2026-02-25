@@ -1,0 +1,1 @@
+export default function VpsPage() { return <div className="card"><h1 className="text-2xl font-bold">VPS Services</h1><p className="mt-3 text-white/70">Server inventory and credentials placeholders.</p></div>; }

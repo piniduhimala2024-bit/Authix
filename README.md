@@ -1,65 +1,63 @@
-# Authix v3
+# Ceylon Secure Network SaaS
 
-**Authix v3** by **Rubin B (pygod7)** is a **fast, async Discord bot** built with **FastAPI**, designed for **member backup and restoration using stored tokens (auths)**. This streamlined version focuses on speed and simplicity. Older versions (v1, v2) can be found in my [rubinexe](https://github.com/rubinexe) repository.
+Production-ready starter SaaS web app for VPN + VPS + Hosting + Digital Services.
 
----
+## Stack
+- Next.js 14 App Router + TypeScript + Tailwind
+- NextAuth (Credentials + Google optional)
+- PostgreSQL + Prisma ORM
+- Stripe checkout + webhook
+- Nodemailer transactional email
+- Zod validation + rate limiting + sanitization
+- Vitest tests
 
-## Features
+## Setup
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+2. Configure env:
+   ```bash
+   cp .env.example .env
+   ```
+3. Run database:
+   ```bash
+   docker compose up -d db
+   ```
+4. Generate and migrate Prisma:
+   ```bash
+   npx prisma generate
+   npx prisma migrate dev --name init
+   ```
+5. Seed data (admin + sample products):
+   ```bash
+   npx prisma db seed
+   ```
+6. Start app:
+   ```bash
+   npm run dev
+   ```
 
-* 💾 **Member Backup**: Save Discord members' tokens safely.
-* 🔄 **Member Restoration**: Re-add backed-up members to any server.
-* ⚡ **Fully Async**: FastAPI-powered for fast operations.
-* 🛠 **Lightweight**: Minimal and focused on handling auths.
+Admin login:
+- Email: `admin@ceylonsecurenetwork.lk`
+- Password: `ChangeMe123!`
 
----
-
-## Installation
-
+## Docker full app
 ```bash
-# Clone the repository
-git clone https://github.com/pygod139/Authix.git
-cd Authix
-
-# Install dependencies
-pip install -r requirements.txt
+docker compose up --build
 ```
 
----
-
-## Configuration
-
-* Simply fill out `config.json` with your bot details. No additional setup is needed.
-
----
-
-## Usage
-
+## Testing
 ```bash
-# Run the bot
-python app.py
+npm test
 ```
 
-### Bot Commands
-
-| Command          | Description                      |
-| ---------------- | -------------------------------- |
-| `!help`          | Show help message                |
-| `!pull <amount>` | Pull specified number of members |
-| `!refresh`       | Refresh tokens                   |
-| `!count`         | Show token count                 |
-
----
-
-## Contributing
-
-1. Fork the repository.
-2. Create a branch (`git checkout -b feature-name`).
-3. Commit your changes (`git commit -am 'Add new feature'`).
-4. Push branch (`git push origin feature-name`).
-5. Open a Pull Request.
-
----
-
-## Disclaimer
-
-**Authix v3** is intended solely for **controlled member backup and restoration**. Misuse for spamming or unauthorized member adding may violate Discord's Terms of Service.
+## Feature checklist
+- [x] Public marketing pages (home, pricing, store, about, contact, blog scaffold, terms, privacy, status)
+- [x] Auth with NextAuth credentials and role-based middleware
+- [x] User dashboard pages (orders, subscriptions, services, tickets, wallet, profile, notifications)
+- [x] Admin dashboard pages (analytics, users, products, orders, tickets, settings, audit)
+- [x] Product and support APIs with validation and security helpers
+- [x] Stripe checkout + webhook integration scaffolding
+- [x] Prisma schema for required models + seed script
+- [x] Docker, env example, API docs, and tests

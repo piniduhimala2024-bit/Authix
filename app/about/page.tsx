@@ -1,0 +1,1 @@
+export default function AboutPage() { return <div className="card"><h1 className="text-3xl font-bold">About Us</h1><p className="mt-4 text-white/75">Ceylon Secure Network provides secure cloud and connectivity services for organizations across Sri Lanka and international markets.</p></div>; }

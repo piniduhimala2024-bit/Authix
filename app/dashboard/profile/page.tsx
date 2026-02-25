@@ -1,0 +1,1 @@
+export default function ProfilePage() { return <div className="card"><h1 className="text-2xl font-bold">Profile Settings</h1><p className="mt-3 text-white/70">Name/email updates, password change, and 2FA placeholder.</p></div>; }

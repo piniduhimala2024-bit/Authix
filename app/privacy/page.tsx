@@ -1,0 +1,1 @@
+export default function PrivacyPage() { return <div className="card"><h1 className="text-3xl font-bold">Privacy Policy</h1><p className="mt-4 text-white/75">We maintain strict data minimization and privacy controls for customers.</p></div>; }

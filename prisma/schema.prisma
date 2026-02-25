@@ -1,0 +1,175 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum ProductType {
+  VPN
+  VPS
+  HOSTING
+  OTHER
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  CANCELED
+  EXPIRED
+}
+
+enum TicketStatus {
+  OPEN
+  IN_PROGRESS
+  CLOSED
+}
+
+model User {
+  id              String    @id @default(cuid())
+  name            String
+  email           String    @unique
+  emailVerified   DateTime?
+  passwordHash    String
+  role            Role      @default(USER)
+  banned          Boolean   @default(false)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  orders          Order[]
+  subscriptions   Subscription[]
+  tickets         Ticket[]
+  notificationsOn Boolean   @default(true)
+  accounts        Account[]
+  sessions        Session[]
+}
+
+model Product {
+  id           String      @id @default(cuid())
+  type         ProductType
+  name         String
+  description  String
+  priceMonthly Decimal     @db.Decimal(10, 2)
+  priceYearly  Decimal     @db.Decimal(10, 2)
+  features     String[]
+  active       Boolean     @default(true)
+  featured     Boolean     @default(false)
+  createdAt    DateTime    @default(now())
+  subscriptions Subscription[]
+}
+
+model Order {
+  id              String      @id @default(cuid())
+  userId          String
+  total           Decimal     @db.Decimal(10, 2)
+  currency        String      @default("LKR")
+  status          OrderStatus @default(PENDING)
+  stripeSessionId String?     @unique
+  createdAt       DateTime    @default(now())
+  user            User        @relation(fields: [userId], references: [id])
+}
+
+model Subscription {
+  id               String             @id @default(cuid())
+  userId           String
+  productId        String
+  status           SubscriptionStatus @default(ACTIVE)
+  currentPeriodEnd DateTime
+  createdAt        DateTime           @default(now())
+  user             User               @relation(fields: [userId], references: [id])
+  product          Product            @relation(fields: [productId], references: [id])
+}
+
+model Ticket {
+  id        String        @id @default(cuid())
+  userId    String
+  subject   String
+  status    TicketStatus  @default(OPEN)
+  createdAt DateTime      @default(now())
+  user      User          @relation(fields: [userId], references: [id])
+  messages  TicketMessage[]
+}
+
+model TicketMessage {
+  id            String   @id @default(cuid())
+  ticketId      String
+  senderUserId  String?
+  senderAdminId String?
+  message       String
+  createdAt     DateTime @default(now())
+  ticket        Ticket   @relation(fields: [ticketId], references: [id])
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  message   String
+  createdAt DateTime @default(now())
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  adminId   String
+  action    String
+  entity    String
+  entityId  String
+  metaJson  Json
+  createdAt DateTime @default(now())
+}
+
+model SiteSetting {
+  id            String   @id @default("site")
+  companyName   String   @default("Ceylon Secure Network")
+  supportEmail  String   @default("support@ceylonsecurenetwork.lk")
+  socialLinks   Json     @default("{}")
+  homepageBlurb String   @default("Secure digital infrastructure for modern businesses.")
+  updatedAt     DateTime @updatedAt
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}

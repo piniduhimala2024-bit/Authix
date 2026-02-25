@@ -1,0 +1,1 @@
+export default function NotificationsPage() { return <div className="card"><h1 className="text-2xl font-bold">Notifications</h1><p className="mt-3 text-white/70">Email preference management.</p></div>; }

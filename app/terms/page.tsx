@@ -1,0 +1,1 @@
+export default function TermsPage() { return <div className="card"><h1 className="text-3xl font-bold">Terms of Service</h1><p className="mt-4 text-white/75">Use of Ceylon Secure Network services is for lawful privacy, security, and business operations only.</p></div>; }
