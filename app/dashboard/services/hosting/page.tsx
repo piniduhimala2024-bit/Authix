@@ -1,0 +1,1 @@
+export default function HostingPage() { return <div className="card"><h1 className="text-2xl font-bold">Hosting Services</h1><p className="mt-3 text-white/70">Hosting package details and account status placeholders.</p></div>; }

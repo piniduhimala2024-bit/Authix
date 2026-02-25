@@ -1,0 +1,1 @@
+export default function VpnPage() { return <div className="card"><h1 className="text-2xl font-bold">VPN Service</h1><p className="mt-3 text-white/70">Configuration download placeholders and subscription details available here.</p></div>; }

@@ -1,0 +1,1 @@
+export default function WalletPage() { return <div className="card"><h1 className="text-2xl font-bold">Wallet & Payments</h1><p className="mt-3 text-white/70">Invoice history and customer billing portal link placeholder.</p></div>; }
